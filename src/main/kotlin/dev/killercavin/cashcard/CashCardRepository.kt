@@ -1,6 +1,6 @@
 package dev.killercavin.cashcard
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface CashCardRepository: JpaRepository<CashCard, Long> {
+interface CashCardRepository: CrudRepository<CashCard, Long> {
 }
