@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: cashcard
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cashcard
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+  jmx:
+    enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

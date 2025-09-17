@@ -2,32 +2,48 @@ package dev.killercavin.cashcard
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.Positive
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
+import java.math.BigDecimal
+import java.time.Instant
+import java.util.UUID
 
 
 @Entity
-@Table(name = "CASHCARD")
 data class CashCard(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val id: UUID? = null,
 
     @field:Positive(message = "Amount must be greater than 0")
-    val amount: Double
+    var amount: BigDecimal,
+
+    @CreationTimestamp
+    val createdAt: Instant? = null,
+
+    @UpdateTimestamp
+    var updatedAt: Instant? = null
 )
 
+
 data class CreateCashCardRequest(
-    val amount: Double
+    @field:Positive(message = "Amount must be greater than 0")
+    val amount: BigDecimal
 )
 
 data class CashCardResponse(
-    val id: Long?,
-    val amount: Double
+    val id: UUID?,
+    val amount: BigDecimal,
+    val createdAt: Instant?,
+    val updatedAt: Instant?
 )
 
 fun CashCard.toResponseDTO(): CashCardResponse =
     CashCardResponse(
         id = this.id,
-        amount = this.amount
+        amount = this.amount,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt
     )
 
 fun CreateCashCardRequest.toEntity(): CashCard =
@@ -35,5 +51,6 @@ fun CreateCashCardRequest.toEntity(): CashCard =
         id = null,
         amount = this.amount
     )
+
 
 
